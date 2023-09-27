@@ -1,0 +1,90 @@
+@import url('https://fonts.googleapis.com/css?family=Merriweather&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Kosugi&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Domine:400,700&display=swap');
+
+body {
+    background-color: rgb(245, 244, 241);
+    overflow-x: hidden;
+    font-family: "Domine";
+}
+
+#sections {
+    top: 60px;
+    height: 100vh;
+    z-index: 90;
+    margin: 0 auto; /* Centers the block */
+}
+
+#my-chart-container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+
+.title {
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+    align-items: center; /* Horizontal centering */
+    justify-content: center; /* Vertical centering */
+    text-align: center; /* Center text content */
+    padding-top: 20px; /* Add some space at the top */
+}
+
+
+.step {
+    align-items: center; /* Centers children horizontally */
+    justify-content: center; /* Centers children vertically */
+    font-family: "Domine";
+    font-weight: 400;
+    line-height: 1.4em;
+    text-align: justify;
+}
+
+.title-section {
+    height: 100vh;
+    display: flex; /* Makes this a flex container */
+    flex-direction: column; /* Stack children vertically */
+}
+
+.chart-section {
+    margin-top: 100px;
+    margin-bottom: 100px;
+}
+
+
+h1, h2 {
+    font-weight: 700;
+    text-align: center;
+    line-height: 32px;
+}
+
+h1 {
+    font-size: 2rem;  /* Adjusted for responsiveness */
+}
+
+/*... Your other styles ...*/
+
+/* Responsive adjustments */
+@media only screen and (max-width: 768px) {
+    h1 {
+        font-size: 1.5rem; /* Adjusting the font-size for smaller screens */
+    }
+
+    #sections {
+        padding: 10px;
+    }
+
+    #graphic {
+        width: 100%;  /* Taking full width on smaller screens */
+    }
+
+    #vis {
+        width: 90%;  /* Adjust as per your design need */
+        height: auto;
+        position: relative;
+    }
+}
