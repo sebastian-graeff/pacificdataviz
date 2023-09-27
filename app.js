@@ -1,4 +1,4 @@
-d3.csv("https://raw.githubusercontent.com/sebastian-graeff/college-majors-visualisation/master/data/CountryYearly.csv", d3.autoType).then(data => {
+d3.csv("https://raw.githubusercontent.com/sebastian-graeff/pacificdataviz.github.io/main/data/CountryYearly.csv", d3.autoType).then(data => {
 
     const margin = { top: 16, right: 6, bottom: 6, left: 250 }; // Increase the left margin value
     const height = 0.8 * window.innerHeight - margin.top - margin.bottom;
@@ -54,7 +54,8 @@ d3.csv("https://raw.githubusercontent.com/sebastian-graeff/college-majors-visual
   
     function bars(svg) {
       let bar = svg.append("g")
-          .attr("fill-opacity", 0.6)
+          .attr("fill", "white")
+          .attr("fill-opacity", 1)
           .selectAll("rect");
   
       return ([date, data], transition) => bar = bar
@@ -79,6 +80,7 @@ d3.csv("https://raw.githubusercontent.com/sebastian-graeff/college-majors-visual
           .style("font", "bold 12px var(--sans-serif)")
           .style("font-variant-numeric", "tabular-nums")
           .attr("text-anchor", "end")  // Right align text
+          .attr("fill", "white")
           .selectAll("text");
 
       return ([date, data], transition) => label = label
@@ -99,7 +101,8 @@ d3.csv("https://raw.githubusercontent.com/sebastian-graeff/college-majors-visual
 
     function axis(svg) {
       const g = svg.append("g")
-        .attr("transform", `translate(0,${margin.top})`);
+        .attr("transform", `translate(0,${margin.top})`)
+        .attr("color", "white");
   
       return (_, transition) => {
         const axis = d3.axisTop(x).ticks(width / 160).tickSizeOuter(0).tickSizeInner(-barSize * (n + y.padding()));
@@ -117,7 +120,8 @@ d3.csv("https://raw.githubusercontent.com/sebastian-graeff/college-majors-visual
         .attr("text-anchor", "end")
         .attr("x", width - 6)
         .attr("y", margin.top + barSize * (n - 0.45))
-        .attr("dy", "0.32em");
+        .attr("dy", "0.32em")
+        .attr("fill", "white");
   
       return ([date], transition) => {
         transition.end().then(() => now.text(d3.utcFormat("%Y")(date)));
@@ -130,10 +134,6 @@ d3.csv("https://raw.githubusercontent.com/sebastian-graeff/college-majors-visual
     const updateTicker = ticker(svg);
 
     let currentFrameIndex = 0;
-
-    let isChartCentered = false;
-    let isScrollingStopped = false;
-    let lastScrollPosition = window.scrollY;
     
     const chartContainer = document.querySelector("#my-chart-container");
     const containerTop = chartContainer.getBoundingClientRect().top + window.scrollY;
@@ -147,7 +147,7 @@ d3.csv("https://raw.githubusercontent.com/sebastian-graeff/college-majors-visual
     // Track the progress of in-place scrolling
     let inPlaceScrollProgress = 0;
     // Set speed of in-place scrolling
-    let scrollIncrement = 0.003;
+    let scrollIncrement = 0.03;
 
     // Update the handleScroll function
     function handleScroll() {

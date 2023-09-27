@@ -3,9 +3,9 @@
 @import url('https://fonts.googleapis.com/css?family=Domine:400,700&display=swap');
 
 body {
-    background-color: rgb(245, 244, 241);
     overflow-x: hidden;
     font-family: "Domine";
+    margin: 0px;
 }
 
 #sections {
@@ -32,6 +32,7 @@ body {
     justify-content: center; /* Vertical centering */
     text-align: center; /* Center text content */
     padding-top: 20px; /* Add some space at the top */
+    margin-bottom: 150px;
 }
 
 
@@ -48,11 +49,20 @@ body {
     height: 100vh;
     display: flex; /* Makes this a flex container */
     flex-direction: column; /* Stack children vertically */
+    background-color: (245, 244, 241)
+}
+
+.voronoi-section {
+    height: 100vh;
+    display: flex; /* Makes this a flex container */
+    flex-direction: column; /* Stack children vertically */
+    background-color: (245, 244, 241)
 }
 
 .chart-section {
-    margin-top: 100px;
-    margin-bottom: 100px;
+    padding-top: 100px;
+    padding-bottom: 100px;
+    background-color: #08f
 }
 
 
