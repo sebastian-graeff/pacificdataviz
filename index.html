@@ -5,10 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
-  <script src = 'd3.js'></script>
-  <script src = 'https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.25.6/d3-legend.min.js'></script>
-
-  <title>Bar Chart Race</title>
+  <title>Pacific Data Viz Challenge</title>
   <script src="https://d3js.org/d3.v7.min.js"></script>
 </head>
 
@@ -20,7 +17,7 @@
             <br><br>
             <h1>How Australia and New Zealand feed the Pacific</h1>
             <p>By <a href = 'https://www.linkedin.com/in/sebastian-graeff/'>Sebastian Graeff</a></p>
-            <p>Australia and New Zealand are top exporters to other Pacific Islands, in 2018 the two countries exported 80% of pacific food supply! <br><br>
+            <p>Australia and New Zealand are top exporters to other Pacific Islands, in 2018 the two countries exported 50% of pacific food supply! <br><br>
                 Scroll down when you are ready!
             </p>
         </div>
@@ -31,18 +28,33 @@
         <section class="step chart-section">
             <div id="my-chart-container"></div>
         </section>
-        <section class="step voronoi-section">
-          <div>
-            <iframe width="100%" height="584" frameborder="0"
-            src="https://observablehq.com/embed/b6b2848319604872@445?cells=plot"></iframe>
+        <section class="step lollipop-section">
+          <div id="lollipop-container">
+              <div class="legend-container">
+                  <h3>Change in exports from Australia and New Zealand</h3>
+                  <p>Exports from Australia and New Zealand to pacific islands have boomed. Trade to the two largest importers, Fiji and Papua New Guinea has more than doubled since 1995!</p>
+                  <div class="legend">
+                      <div class="legend-item">
+                          <span class="legend-dot" style="background-color: #FF9D00;"></span>
+                          2018
+                      </div>
+                      <div class="legend-item">
+                          <span class="legend-dot" style="background-color: #B36E00;"></span>
+                          1995
+                      </div>
+                  </div>
+              </div>
+              <div id="my-lollipop-chart"></div>
+              <div class="tooltip" id="tooltip"></div>
           </div>
-      </section>
+        </section>
+        <section class="step lollipop-section">
+          <div id="my-bubble-chart"></div>
+        </section>
   </div>
   <script src="app.js"></script>
-  <script src="scroller.js"></script>
+  <script src="lollipop.js"></script>
 
 </body>
-
-
 </html>
 

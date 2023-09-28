@@ -77,7 +77,7 @@ d3.csv("https://raw.githubusercontent.com/sebastian-graeff/pacificdataviz.github
   
     function labels(svg) {
       let label = svg.append("g")
-          .style("font", "bold 12px var(--sans-serif)")
+          .style("font", "bold 12px Montserrat")
           .style("font-variant-numeric", "tabular-nums")
           .attr("text-anchor", "end")  // Right align text
           .attr("fill", "white")
@@ -115,7 +115,7 @@ d3.csv("https://raw.githubusercontent.com/sebastian-graeff/pacificdataviz.github
   
     function ticker(svg) {
       const now = svg.append("text")
-        .style("font", `bold ${barSize}px var(--sans-serif)`)
+        .style("font", `bold ${barSize}px Montserrat`)
         .style("font-variant-numeric", "tabular-nums")
         .attr("text-anchor", "end")
         .attr("x", width - 6)
