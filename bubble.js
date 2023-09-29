@@ -3,8 +3,9 @@ d3.csv("https://raw.githubusercontent.com/sebastian-graeff/pacificdataviz.github
 
 function init(data) {
   // Define the dimensions of the individual circle packing SVG
-  const svgWidth = 240;  // 160 * 1.5
-  const svgHeight = 270;  // 180 * 1.5  
+  const svgWidth = window.innerWidth * 0.15;  // 15% of viewport width
+  const svgHeight = window.innerHeight * 0.15;  // 15% of viewport height
+  
 
   // Define the margin for the individual circle packing SVG
   const margin = { top: 10, right: 10, bottom: 30, left: 10 };
@@ -111,7 +112,6 @@ function init(data) {
           .style("stroke", "none")
           .style("stroke-width", "0px");
     })
-    
 
     counter++;
   });
