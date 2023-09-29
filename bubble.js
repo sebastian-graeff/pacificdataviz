@@ -98,11 +98,20 @@ function init(data) {
         tooltip.html(`<b>Commodity:</b> ${d.data.commodity}<br><b>Proportion:</b> ${percentage.toFixed(2)}%`)
               .style("left", (event.pageX + 10) + "px")
               .style("top", (event.pageY - 10) + "px");
-    })     
+        
+        // Highlight the circle by setting its stroke and stroke width
+        d3.select(this)
+          .style("stroke", "white")
+          .style("stroke-width", "2px");
+    })
     .on("mouseout", function(d) {
-        // Hide tooltip on mouseout
         tooltip.style("display", "none");
-    });
+        // Remove the circle's highlight by resetting its stroke and stroke width
+        d3.select(this)
+          .style("stroke", "none")
+          .style("stroke-width", "0px");
+    })
+    
 
     counter++;
   });
