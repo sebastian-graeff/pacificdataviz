@@ -7,6 +7,8 @@
   <link rel="stylesheet" href="style.css">
   <title>Pacific Data Viz Challenge</title>
   <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.9.1/d3-tip.min.js"></script>
+
 </head>
 
 <body>
@@ -49,12 +51,17 @@
           </div>
         </section>
         <section class="step lollipop-section">
-          <div id="my-bubble-chart"></div>
+          <div id="my_bubble_plot"></div>
+          <div id="tooltip2" style="position: absolute; display: none; background-color: white; padding: 5px; border: 1px solid black;"></div>
+        </section>
+        <section class="step lollipop-section">
+          <div id="my_bubble_plot"></div>
+          <div id="tooltip2" style="position: absolute; display: none; background-color: white; padding: 5px; border: 1px solid black;"></div>
         </section>
   </div>
   <script src="app.js"></script>
   <script src="lollipop.js"></script>
-
+  <script src="bubble.js"></script>
 </body>
 </html>
 

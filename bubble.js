@@ -1,108 +1,109 @@
-// set the dimensions and margins of the graph
-var width = 460
-var height = 460
+// Load the CSV data
+d3.csv("https://raw.githubusercontent.com/sebastian-graeff/pacificdataviz.github.io/main/data/BubbleChartPlot.csv").then(init);
 
-// append the svg object to the body of the page
-var svg = d3.select("#my_dataviz")
-  .append("svg")
-    .attr("width", width)
-    .attr("height", height)
+function init(data) {
+  // Define the dimensions of the individual circle packing SVG
+  const svgWidth = 240;  // 160 * 1.5
+  const svgHeight = 270;  // 180 * 1.5  
 
-// Read data
-d3.csv("https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_dataset/11_SevCatOneNumNestedOneObsPerGroup.csv", function(data) {
+  // Define the margin for the individual circle packing SVG
+  const margin = { top: 10, right: 10, bottom: 30, left: 10 };
 
-  // Filter a bit the data -> more than 1 million inhabitants
-  data = data.filter(function(d){ return d.value>10000000 })
+  // Create a color scale for commodities
+  const colorScale = d3.scaleOrdinal()
+  .range([
+    "#6A4000",                // Much darker tint
+    "#8A5500",                // Darker tint
+    "#B36E00",                // Original darkest color
+    "#FF9D00",                // Original color
+    "#C07820",                // Shade in-between
+    "#FFAF40",                // Tint in-between
+    "#D88A30",                // Another shade in-between
+    "#FFC270",                // Another tint in-between
+    "#E49C60",                // Yet another shade in-between
+    "#FFD9A0",                // Original lightest tint
+    "#FFEAD0"                 // Much lighter tint
+  ]);
 
-  // Color palette for continents?
-  var color = d3.scaleOrdinal()
-    .domain(["Asia", "Europe", "Africa", "Oceania", "Americas"])
-    .range(d3.schemeSet1);
 
-  // Size scale for countries
-  var size = d3.scaleLinear()
-    .domain([0, 1400000000])
-    .range([7,55])  // circle will be between 7 and 55 px wide
 
-  // create a tooltip
-  var Tooltip = d3.select("#my_dataviz")
-    .append("div")
-    .style("opacity", 0)
-    .attr("class", "tooltip")
-    .style("background-color", "white")
-    .style("border", "solid")
-    .style("border-width", "2px")
-    .style("border-radius", "5px")
-    .style("padding", "5px")
+  // Convert the value column to numeric
+  data.forEach(function(d) {
+    d.value = +d.value;
+  });
 
-  // Three function that change the tooltip when user hover / move / leave a cell
-  var mouseover = function(d) {
-    Tooltip
-      .style("opacity", 1)
-  }
-  var mousemove = function(d) {
-    Tooltip
-      .html('<u>' + d.key + '</u>' + "<br>" + d.value + " inhabitants")
-      .style("left", (d3.mouse(this)[0]+20) + "px")
-      .style("top", (d3.mouse(this)[1]) + "px")
-  }
-  var mouseleave = function(d) {
-    Tooltip
-      .style("opacity", 0)
-  }
+  // Nest the data by country name
+  const nestedData = d3.group(data, d => d.name);
 
-  // Initialize the circle: all located at the center of the svg area
-  var node = svg.append("g")
-    .selectAll("circle")
-    .data(data)
+  let counter = 0;
+  const tooltip = d3.select("#tooltip2");
+
+  nestedData.forEach(function(countryData, countryName) {
+
+    const rowIndex = Math.floor(counter / 5);
+    const colIndex = counter % 5;
+  
+    // Calculate the x and y position for each group based on its index
+    const xPos = colIndex * (svgWidth + 10); // Added a 10-pixel gap between SVGs
+    const yPos = rowIndex * (svgHeight + 10);
+
+    const totalValue = d3.sum(countryData, d => d.value);
+
+  
+    // Create a group for each country and translate it to its position
+    const group = d3.select("#my_bubble_plot")
+      .append("g")
+      .attr("transform", `translate(${xPos}, ${yPos})`);
+    
+    // Then, create an individual SVG for this country within the group
+    const svg = group
+      .append("svg")
+      .attr("width", svgWidth)
+      .attr("height", svgHeight)
+
+    // Add a label under the SVG for the country name
+    svg.append("text")
+      .attr("x", svgWidth / 2)
+      .attr("y", svgHeight - 5) // 5 pixels from the bottom of SVG
+      .attr("text-anchor", "middle")
+      .style("font-size", "16px")    // Increased font size
+      .style("fill", "white")   
+      .text(countryName);
+
+    // Define the pack layout
+    const pack = d3.pack()
+      .size([svgWidth - margin.left - margin.right, svgHeight - margin.top - margin.bottom])
+      .padding(1);
+
+    // Create a hierarchy from the data of a specific country
+    const root = d3.hierarchy({ children: countryData })
+      .sum(d => d.value);
+
+    // Compute the circle packing layout
+    pack(root);
+
+    // Create a selection for each circle
+    const circles = svg.selectAll("circle")
+    .data(root.descendants().slice(1))
     .enter()
     .append("circle")
-      .attr("class", "node")
-      .attr("r", function(d){ return size(d.value)})
-      .attr("cx", width / 2)
-      .attr("cy", height / 2)
-      .style("fill", function(d){ return color(d.region)})
-      .style("fill-opacity", 0.8)
-      .attr("stroke", "black")
-      .style("stroke-width", 1)
-      .on("mouseover", mouseover) // What to do when hovered
-      .on("mousemove", mousemove)
-      .on("mouseleave", mouseleave)
-      .call(d3.drag() // call specific function when circle is dragged
-           .on("start", dragstarted)
-           .on("drag", dragged)
-           .on("end", dragended));
+    .attr("cx", d => d.x + margin.left)
+    .attr("cy", d => d.y + margin.top)
+    .attr("r", d => d.r)
+    .attr("fill", d => colorScale(d.data.commodity))
+    .on("mouseover", function(event, d) {
+        const percentage = (d.value / totalValue) * 100; // calculate the percentage
+        // Display tooltip on mouseover with formatted commodity name and its percentage
+        tooltip.style("display", "inline");
+        tooltip.html(`<b>Commodity:</b> ${d.data.commodity}<br><b>Proportion:</b> ${percentage.toFixed(2)}%`)
+              .style("left", (event.pageX + 10) + "px")
+              .style("top", (event.pageY - 10) + "px");
+    })     
+    .on("mouseout", function(d) {
+        // Hide tooltip on mouseout
+        tooltip.style("display", "none");
+    });
 
-  // Features of the forces applied to the nodes:
-  var simulation = d3.forceSimulation()
-      .force("center", d3.forceCenter().x(width / 2).y(height / 2)) // Attraction to the center of the svg area
-      .force("charge", d3.forceManyBody().strength(.1)) // Nodes are attracted one each other of value is > 0
-      .force("collide", d3.forceCollide().strength(.2).radius(function(d){ return (size(d.value)+3) }).iterations(1)) // Force that avoids circle overlapping
-
-  // Apply these forces to the nodes and update their positions.
-  // Once the force algorithm is happy with positions ('alpha' value is low enough), simulations will stop.
-  simulation
-      .nodes(data)
-      .on("tick", function(d){
-        node
-            .attr("cx", function(d){ return d.x; })
-            .attr("cy", function(d){ return d.y; })
-      });
-
-  // What happens when a circle is dragged?
-  function dragstarted(d) {
-    if (!d3.event.active) simulation.alphaTarget(.03).restart();
-    d.fx = d.x;
-    d.fy = d.y;
-  }
-  function dragged(d) {
-    d.fx = d3.event.x;
-    d.fy = d3.event.y;
-  }
-  function dragended(d) {
-    if (!d3.event.active) simulation.alphaTarget(.03);
-    d.fx = null;
-    d.fy = null;
-  }
-
-})
+    counter++;
+  });
+}

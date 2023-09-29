@@ -119,6 +119,18 @@ body {
     pointer-events: none; /* This ensures that the tooltip doesn't interfere with other interactive elements */
 }
 
+#my_bubble_plot {
+    width: 1300px; 
+    height: 830px;
+    position: relative; /* so that the inner SVGs/g elements are positioned relative to this container */
+ }
+
+#tooltip2 {
+    display: none;
+    top: 100px;
+    left: 100px;
+    z-index: 1000;
+}
 
 .chart-section {
     padding-top: 100px;
