@@ -41,8 +41,12 @@ function init(data) {
 
   nestedData.forEach(function(countryData, countryName) {
 
-    const rowIndex = Math.floor(counter / 5);
-    const colIndex = counter % 5;
+    // Ensure no more than 16 SVGs are created
+    if (counter >= 16) return;
+    
+    const rowIndex = Math.floor(counter / 4);
+    const colIndex = counter % 4;
+
   
     // Calculate the x and y position for each group based on its index
     const xPos = colIndex * (svgWidth + 10); // Added a 10-pixel gap between SVGs
