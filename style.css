@@ -92,6 +92,12 @@ body {
     margin-top: 20px;
 }
 
+.legend-bubbles {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+}
+
 .legend-item {
     display: flex;
     align-items: center;
@@ -125,6 +131,10 @@ body {
     height: 830px;
     position: relative; /* so that the inner SVGs/g elements are positioned relative to this container */
  }
+
+.bubbleSvg {
+    position: absolute;
+}
 
 #tooltip2 {
     display: none;

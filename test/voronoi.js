@@ -1,46 +1,61 @@
-const width = 600;
-const height = 600;
+// set the dimensions and margins of the graph
+const width = 450
+const height = 450
 
-const svg = d3.select("#chart").append("svg")
-  .attr("width", width)
-  .attr("height", height);
+// append the svg object to the body of the page
+const svg = d3.select("#my_dataviz")
+  .append("svg")
+    .attr("width", 450)
+    .attr("height", 450)
 
-// Sample data
-const data = {
-  "name": "root",
-  "value": 100,
-  "children": [
-    { "name": "A", "value": 50 },
-    { "name": "B", "value": 30 },
-    { "name": "C", "value": 20 }
-  ]
-};
+// create dummy data -> just one element per circle
+const data = [{ "name": "A" }, { "name": "B" }, { "name": "C" }, { "name": "D" }, { "name": "E" }, { "name": "F" }, { "name": "G" }, { "name": "H" }]
 
-// Convert data to hierarchy
-const root = d3.hierarchy(data).sum(d => d.value);
+// Initialize the circle: all located at the center of the svg area
+const node = svg.append("g")
+  .selectAll("circle")
+  .data(data)
+  .join("circle")
+    .attr("r", 25)
+    .attr("cx", width / 2)
+    .attr("cy", height / 2)
+    .style("fill", "#19d3a2")
+    .style("fill-opacity", 0.3)
+    .attr("stroke", "#b3a2c8")
+    .style("stroke-width", 4)
+    .call(d3.drag() // call specific function when circle is dragged
+         .on("start", dragstarted)
+         .on("drag", dragged)
+         .on("end", dragended));
 
-// Create voronoi treemap
-const voronoiTreemap = d3.voronoiTreemap()
-  .extent([[0, 0], [width, height]]);
+// Features of the forces applied to the nodes:
+const simulation = d3.forceSimulation()
+    .force("center", d3.forceCenter().x(width / 2).y(height / 2)) // Attraction to the center of the svg area
+    .force("charge", d3.forceManyBody().strength(1)) // Nodes are attracted one each other of value is > 0
+    .force("collide", d3.forceCollide().strength(.1).radius(30).iterations(1)) // Force that avoids circle overlapping
 
-voronoiTreemap(root);
+// Apply these forces to the nodes and update their positions.
+// Once the force algorithm is happy with positions ('alpha' value is low enough), simulations will stop.
+simulation
+    .nodes(data)
+    .on("tick", function(d){
+      node
+          .attr("cx", d => d.x)
+          .attr("cy", d => d.y)
+    });
 
-// Color scale
-const color = d3.scaleOrdinal(d3.schemeCategory10);
-
-// Draw cells
-svg.selectAll("path")
-  .data(root.leaves())
-  .enter().append("path")
-  .attr("d", d => "M" + d.polygon.join("L") + "Z")
-  .attr("fill", d => color(d.data.name))
-  .attr("stroke", "white");
-
-// Add labels
-svg.selectAll("text")
-  .data(root.leaves())
-  .enter().append("text")
-  .attr("transform", d => `translate(${d.polygon.site.x},${d.polygon.site.y})`)
-  .attr("text-anchor", "middle")
-  .attr("dy", ".35em")
-  .text(d => d.data.name);
+// What happens when a circle is dragged?
+function dragstarted(event, d) {
+ if (!event.active) simulation.alphaTarget(.03).restart();
+  d.fx = d.x;
+  d.fy = d.y;
+}
+function dragged(event, d) {
+  d.fx = event.x;
+  d.fy = event.y;
+}
+function dragended(event, d) {
+ if (!event.active) simulation.alphaTarget(.03);
+  d.fx = null;
+  d.fy = null;
+}

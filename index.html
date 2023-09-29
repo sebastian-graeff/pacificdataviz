@@ -67,16 +67,12 @@
                 <div class="legend-container">
                     <h3>Change in exports from Australia and New Zealand</h3>
                     <p>Exports from Australia and New Zealand to pacific islands have boomed. Trade to the two largest importers, Fiji and Papua New Guinea has more than doubled since 1995!</p>
-                    <div class="legend">
-                        <div class="legend-item">
-                            <span class="legend-dot" style="background-color: #FF9D00;"></span>
-                            2018
-                        </div>
-                        <div class="legend-item">
-                            <span class="legend-dot" style="background-color: #B36E00;"></span>
-                            1995
-                        </div>
+                    <div class="legend-bubbles">
+                        
                     </div>
+                    <label for="dateSlider">Select a year:</label>
+                    <input type="range" id="dateSlider" min="1995" max="2018" step="1" value="1995">
+                    <span id="yearDisplay">1995</span>
                 </div>
             </div>
             
@@ -87,6 +83,7 @@
           </div>
           <div id="tooltip2" style="position: absolute; display: none; background-color: white; padding: 5px; border: 1px solid black;"></div>
         </section>
+        
         <section class="step lollipop-section">
           <div id="my_stream"></div>
         </section>
