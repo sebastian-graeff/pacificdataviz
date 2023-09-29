@@ -65,24 +65,26 @@ body {
 .lollipop-section {
     height: 100vh;
     display: flex;
-    justify-content: center;
-    background-color: #08f
+    justify-content: center; /* center horizontally */
+    align-items: center;     /* center vertically */
+    background-color: #08f;
 }
 
 #lollipop-container {
-    display: flex;
-    flex-direction: row; /* default direction */
-    align-items: flex-start; 
     color: #fff;
     height: auto;
     justify-content: space-between; /* put space between the two child divs */
-    width: 90%; /* take 90% of the container's width */
+    width: 95%; /* take 90% of the container's width */
     max-width: 1200px;
 }
 
 
 #my-lollipop-chart {
     flex: 3; /* take 3 portions of the available space */
+}
+
+.lollipop-svg .y-axis-labels {
+    font: bold 16px Montserrat;
 }
 
 .legend {
@@ -148,10 +150,35 @@ h1 {
     font-size: 2rem;  /* Adjusted for responsiveness */
 }
 
-/*... Your other styles ...*/
-
+.column {
+    float: left;
+    box-sizing: border-box;
+    /* So that padding doesn't add up to column width */
+    padding: 10px;
+    /* Some spacing between content and the column's boundary */
+  }
+  
+  .left {
+    flex: 25%;
+  }
+  
+  .right {
+    flex: 75%;
+  }
+  
+  .row {
+    display: flex;
+    flex-direction: row;
+  }
+  
 /* Responsive adjustments */
-@media only screen and (max-width: 768px) {
+@media screen and (max-width: 800px) {
+    .column {
+        width: 100%;
+      }
+    .row {
+        flex-direction: column;
+    }
     h1 {
         font-size: 1.5rem; /* Adjusting the font-size for smaller screens */
     }
