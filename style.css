@@ -75,7 +75,6 @@ body {
     height: auto;
     justify-content: space-between; /* put space between the two child divs */
     width: 95%; /* take 90% of the container's width */
-    max-width: 1200px;
 }
 
 
