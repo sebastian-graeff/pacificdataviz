@@ -20,7 +20,7 @@
             <h1>How Australia and New Zealand feed the Pacific</h1>
             <p>By <a href = 'https://www.linkedin.com/in/sebastian-graeff/'>Sebastian Graeff</a></p>
             <p>Australia and New Zealand are top exporters to other Pacific Islands, in 2018 the two countries exported 50% of pacific food supply! <br><br>
-                Scroll down when you are ready!
+                Ready to find out more? <br><br> Scroll down when you are ready!
             </p>
         </div>
         <svg viewBox="0 0 500 350" preserveAspectRatio="none" style="height: 500px; width: 100%; position: absolute; bottom: 0;">
@@ -37,7 +37,13 @@
               <div class="column left">
                   <div class="legend-container">
                       <h3>Change in exports from Australia and New Zealand</h3>
-                      <p>Exports from Australia and New Zealand to pacific islands have boomed. Trade to the two largest importers, Fiji and Papua New Guinea has more than doubled since 1995!</p>
+                      <p>Exports from Australia and New Zealand to pacific islands are a signifcant source of goods for Pacific nations. 
+                        The two countries have expanded their trade footprint in the region, with majority of trade flowing to 
+                        just two countries, Fiji and Papua New Guinea. Trade with these two pacific nations has more than doubled since 1995!</p>
+                        <br>
+                        <p>Hover over the points for more accurate info</p>
+                        <br>
+                        <p>Year of data:</p>                    
                       <div class="legend">
                           <div class="legend-item">
                               <span class="legend-dot" style="background-color: #FF9D00;"></span>
@@ -65,8 +71,14 @@
             <!-- Left Column for Legend and Description -->
             <div class="column left">
                 <div class="legend-container">
-                    <h3>Change in exports from Australia and New Zealand</h3>
-                    <p>Exports from Australia and New Zealand to pacific islands have boomed. Trade to the two largest importers, Fiji and Papua New Guinea has more than doubled since 1995!</p>
+                    <h3>A changing trade profile</h3>
+                    <p>While exports from Australia and New Zealand to pacific islands have boomed. Only a few sectors are noted to be leading the race.</p>
+                    <br>
+                    <p>In recent years the cereals have completley taken over as chief imports in the largests pacific economies, notably Fiji and Papua New Guinea</p>
+                    <br>
+                    <p>Hover over the bubbles to extract additional information!</p>
+                    <br>                   
+                                        
                     <div class="legend-bubbles">
                         
                     </div>
@@ -83,15 +95,23 @@
           </div>
           <div id="tooltip2" style="position: absolute; display: none; background-color: white; padding: 5px; border: 1px solid black;"></div>
         </section>
-        
-        <section class="step lollipop-section">
-          <div id="my_stream"></div>
+        <section class="step between-section">
+          <div style="max-width:70%">
+            <h1>Now, explore the data yourself!</h1>
+            <p>Now it's your turn! Get a tiny start in data exploration (and analysis) by searching the "Bubble Data" below for the largest (and smallest) trades between Australia, New Zealand and Pacific nations. You can even play around with the "Bubbles" by draging them around to order them in any way you would like</p>
+            <label for="dateSlider">Select a year:</label>
+            <input type="range" id="dateSlider2" min="1995" max="2018" step="1" value="1995">
+          </div>
+        </section>
+        <section class="step chart-section">
+            <div id="my_dataviz"></div>
+            <div id="tooltip3" style="position: absolute; display: none; background-color: white; padding: 5px; border: 1px solid black;"></div>
         </section>
   </div>
   <script src="app.js"></script>
   <script src="lollipop.js"></script>
   <script src="bubble.js"></script>
-  <script src="stream.js"></script>
+  <script src="final.js"></script>
   
 </body>
 </html>

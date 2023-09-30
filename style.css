@@ -62,6 +62,14 @@ body {
     stroke-width: 0; /* Hide the axis line */
 }
 
+.between-section {
+    height: 20vh;
+    display: flex;
+    align-items: center;     /* center vertically */
+    background-color: #08f;
+    color: white;
+}
+
 .lollipop-section {
     height: 100vh;
     display: flex;
@@ -75,6 +83,13 @@ body {
     height: auto;
     justify-content: space-between; /* put space between the two child divs */
     width: 95%; /* take 90% of the container's width */
+}
+
+#my_dataviz {
+    width: 100%;
+    height: 100vh;
+    display: block;
+    background-color: #08f
 }
 
 

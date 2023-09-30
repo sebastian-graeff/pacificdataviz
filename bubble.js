@@ -19,6 +19,32 @@ function filterDataByDate(data, year) {
     return data.filter(d => new Date(d.date).getFullYear() === year);
 }
 
+const colorScale = d3.scaleOrdinal()
+    .domain([
+        'Fish, crustaceans, molluscs, aquatic invertebrates ne',
+        'Coffee, tea, mate and spices',
+        'Tobacco and manufactured tobacco substitutes',
+        'Cereal, flour, starch, milk preparations and products',
+        'Milling products, malt, starches, inulin, wheat glute',
+        'Vegetable, fruit, nut, etc food preparations',
+        'Animal,vegetable fats and oils, cleavage products, et',
+        'Edible vegetables and certain roots and tubers',
+        'Dairy products, eggs, honey, edible animal product nes',
+        'Cereals', 'Sugars and sugar confectionery',
+        'Beverages, spirits and vinegar', 'Cocoa and cocoa preparations',
+        'Edible fruit, nuts, peel of citrus fruit, melons',
+        'Oil seed, oleagic fruits, grain, seed, fruit, etc, ne',
+        'Meat, fish and seafood food preparations nes',
+        'Miscellaneous edible preparations', 'Meat and edible meat offal'
+    ])
+    .range([
+        "#6A4000", "#8A5500", "#B36E00", "#FF9D00",
+        "#C07820", "#FFAF40", "#D88A30", "#FFC270",
+        "#E49C60", "#FFD9A0", "#FFEAD0", "#6A4001",
+        "#8A5501", "#B36E01", "#FF9D01", "#C07821",
+        "#FFAF41", "#D88A31"
+    ]);
+
 const countryPositions = {
     'Cook Islands': { row: 0, col: 0 },
     'Marshall Islands': { row: 0, col: 1 },

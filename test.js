@@ -1,10 +1,10 @@
-// Set the dimensions and margins of the graph
-const container = d3.select("#my_dataviz");
-const containerWidth = container.node().getBoundingClientRect().width;
-const containerHeight = container.node().getBoundingClientRect().height;
+// set the dimensions and margins of the graph
+const FinalDiv = d3.select("#my_dataviz");
+const FinalWidth = FinalDiv.node().getBoundingClientRect().FinalWidth;
+const FinalHeight = FinalDiv.node().getBoundingClientRect().FinalHeight;
 
-// Define a color scale for commodities
-const colorScale = d3.scaleOrdinal()
+// Define color scale for commodities
+const FinalColorScale = d3.scaleOrdinal()
   .domain([
     'Fish, crustaceans, molluscs, aquatic invertebrates ne',
     'Coffee, tea, mate and spices',
@@ -33,16 +33,16 @@ const colorScale = d3.scaleOrdinal()
 // Define the hint text
 const hintText = "Hint: You can click on, and move bubbles to create a clearer overview.";
 
-// Append the SVG object to the body of the page
-const svg = d3.select("#my_dataviz")
+// append the FinalSvg object to the body of the page
+const FinalSvg = d3.select("#my_dataviz")
   .append("svg")
-  .attr("width", containerWidth)
-  .attr("height", containerHeight);
+  .attr("width", FinalWidth)
+  .attr("height", FinalHeight);
 
-const selectedYearText = svg.append("text")
+const FinalFinalSelectedYearText = FinalSvg.append("text")
   .attr("class", "selected-year")
-  .attr("x", containerWidth / 2)
-  .attr("y", containerHeight / 2)
+  .attr("x", FinalWidth / 2)
+  .attr("y", FinalHeight / 2)
   .attr("text-anchor", "middle")
   .attr("alignment-baseline", "middle")
   .style("font-size", "50px")
@@ -50,10 +50,10 @@ const selectedYearText = svg.append("text")
   .text("1995");
 
 // Add the hint text to the bottom right region
-const hint = svg.append("text")
+const hint = FinalSvg.append("text")
   .attr("class", "hint-text")
-  .attr("x", containerWidth - 100) // Adjust the x-coordinate for proper alignment
-  .attr("y", containerHeight - 100) // Adjust the y-coordinate for proper alignment
+  .attr("x", FinalWidth - 100) // Adjust the x-coordinate for proper alignment
+  .attr("y", FinalHeight - 100) // Adjust the y-coordinate for proper alignment
   .attr("text-anchor", "end") // Align the text to the end (right)
   .attr("alignment-baseline", "baseline") // Align the text to the baseline
   .style("font-size", "14px")
@@ -67,7 +67,7 @@ d3.csv("https://raw.githubusercontent.com/sebastian-graeff/pacificdataviz.github
     data.forEach(d => {
       d.date = new Date(d.date);
       d.value = +d.value;
-      d.color = colorScale(d.commodity); // Add a color attribute
+      d.color = FinalColorScale(d.commodity); // Add a color attribute
     });
 
     const data2018 = data.filter(d => d.date.getFullYear() === 1995);
@@ -80,13 +80,13 @@ d3.csv("https://raw.githubusercontent.com/sebastian-graeff/pacificdataviz.github
       .range([5, 80]);
 
     // Draw the circles:
-    const node = svg.append("g")
+    const node = FinalSvg.append("g")
       .selectAll("circle")
       .data(data2018)
       .join("circle")
       .attr("r", d => valueScale(d.value))
-      .attr("cx", containerWidth / 2)
-      .attr("cy", containerHeight / 2)
+      .attr("cx", FinalWidth / 2)
+      .attr("cy", FinalHeight / 2)
       .style("fill", d => d.color) // Use the color attribute for filling
       .style("fill-opacity", 0.9)
       .call(d3.drag()
@@ -119,28 +119,28 @@ d3.csv("https://raw.githubusercontent.com/sebastian-graeff/pacificdataviz.github
 
     data.forEach((d, i) => {
       const angle = i * angleIncrement;
-      const radialDistance = Math.min(containerWidth, containerHeight) / 3;  // Radius of the donut
-      d.x = d.initialX = containerWidth / 2 + radialDistance * Math.cos(angle);  // Store initial position in initialX
-      d.y = d.initialY = containerHeight / 2 + radialDistance * Math.sin(angle);  // Store initial position in initialY
+      const radialDistance = Math.min(FinalWidth, FinalHeight) / 3;  // Radius of the donut
+      d.x = d.initialX = FinalWidth / 2 + radialDistance * Math.cos(angle);  // Store initial position in initialX
+      d.y = d.initialY = FinalHeight / 2 + radialDistance * Math.sin(angle);  // Store initial position in initialY
     });
 
     // Eliminate other forces; only use the gentleDonutForce and collision
     const simulation = d3.forceSimulation(data)
-      .force("center", d3.forceCenter(containerWidth / 2, containerHeight / 2))
+      .force("center", d3.forceCenter(FinalWidth / 2, FinalHeight / 2))
       .force("collide", d3.forceCollide().strength(1).radius(d => valueScale(d.value) + 5).iterations(1))
       .force("radial", radialForce)
       .alpha(1)
       .alphaDecay(0.02);
 
     function radialForce(d) {
-      const cx = containerWidth / 2;
-      const cy = containerHeight / 2;
+      const cx = FinalWidth / 2;
+      const cy = FinalHeight / 2;
 
       const dx = d.x - cx;
       const dy = d.y - cy;
       const angle = Math.atan2(dy, dx);
 
-      const radialDistance = Math.min(containerWidth, containerHeight) / 3;
+      const radialDistance = Math.min(FinalWidth, FinalHeight) / 3;
       const targetX = cx + radialDistance * Math.cos(angle);
       const targetY = cy + radialDistance * Math.sin(angle);
 
@@ -155,8 +155,8 @@ d3.csv("https://raw.githubusercontent.com/sebastian-graeff/pacificdataviz.github
     function gravitationalForce(strength) {
       return function() {
         for (const d of data) {
-          const cx = containerWidth / 2;
-          const cy = containerHeight / 2;
+          const cx = FinalWidth / 2;
+          const cy = FinalHeight / 2;
           const dx = d.x - cx;
           const dy = d.y - cy;
           const distance = Math.sqrt(dx * dx + dy * dy);
@@ -199,7 +199,7 @@ d3.csv("https://raw.githubusercontent.com/sebastian-graeff/pacificdataviz.github
     function dragended(event, d) {
       if (!event.active) simulation.alphaTarget(0.1);
       d.fx = null;  // Release the fixed position
-      d.fy = null;  // So nodes can gently move towards their intended positions
+      d.fy = null;  // so nodes can gently move towards their intended positions
     }
 
     // Define a function to update the visualization with new data
@@ -213,7 +213,7 @@ d3.csv("https://raw.githubusercontent.com/sebastian-graeff/pacificdataviz.github
         .range([5, 80]);
 
       // Update the circles with the new data
-      const node = svg.selectAll("circle")
+      const node = FinalSvg.selectAll("circle")
         .data(newData);
 
       // Exit any old circles
@@ -260,30 +260,32 @@ d3.csv("https://raw.githubusercontent.com/sebastian-graeff/pacificdataviz.github
       simulation.alpha(1).restart();
     }
 
-    // Add an event listener for changes in the year selector
-    const yearSelector = document.getElementById("dateSlider2");
-    yearSelector.addEventListener("input", function () {
-      const selectedYear = parseInt(yearSelector.value);
+// Add an event listener for changes in the year selector
+const yearSelector = document.getElementById("dateSlider2");
+yearSelector.addEventListener("input", function () {
+  const selectedYear = parseInt(yearSelector.value);
 
-      // Filter the data based on the selected year
-      const filteredData = data.filter(d => d.date.getFullYear() === selectedYear);
+  // Filter the data based on the selected year
+  const filteredData = data.filter(d => d.date.getFullYear() === selectedYear);
 
-      // Update the visualization with the filtered data
-      updateVisualization(filteredData);
+  // Update the visualization with the filtered data
+  updateVisualization(filteredData);
 
-      // Update the selected year text
-      selectedYearText.text(`${selectedYear}`);
-    });
+  // Update the selected year text
+  FinalSelectedYearText.text(`${selectedYear}`);
+});
+
 
     window.addEventListener("resize", function() {
-      // Get new width and height
-      const newWidth = container.node().getBoundingClientRect().width;
-      const newHeight = container.node().getBoundingClientRect().height;
+      // Get new width and FinalHeight
+      const FinalNewWidth = FinalDiv.node().getBoundingClientRect().FinalWidth;
+      const FinalNewHeight = FinalDiv.node().getBoundingClientRect().FinalHeight;
 
       // Resize the SVG
-      svg.attr("width", newWidth).attr("height", newHeight);
+      FinalSvg.attr("width", FinalNewWidth).attr("height", FinalNewHeight);
 
       // Optional: restart the simulation if you want the nodes to re-adjust immediately after resizing
       simulation.restart();
     });
+
   });

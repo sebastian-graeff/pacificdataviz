@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
   <title>Voronoi Treemap</title>
   <script src="https://d3js.org/d3.v6.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/seedrandom/3.0.5/seedrandom.min.js"></script>
@@ -12,8 +13,13 @@
 </head>
 
 <body>
+  <section>
+    <input type="range" id="dateSlider" min="1995" max="2018" step="1" value="1995">
+  </section>
   <section class="step chart-section">
-    <div id="my_dataviz"></div>
+    <div id="my_dataviz">
+    </div>
+    <div id="tooltip3" style="position: absolute; display: none; background-color: white; padding: 5px; border: 1px solid black;"></div>
   </section>
   <script src="voronoi.js"></script>
 </body>

@@ -1,7 +1,7 @@
 d3.csv("https://raw.githubusercontent.com/sebastian-graeff/pacificdataviz.github.io/main/data/CountryYearly.csv", d3.autoType).then(data => {
 
-    const margin = { top: 16, right: 6, bottom: 6, left: 250 }; // Increase the left margin value
-    const height = 0.8 * window.innerHeight - margin.top - margin.bottom;
+    const margin = { top: 160, right: 6, bottom: 40, left: 250 }; // Increase the left margin value
+    const height = 1 * window.innerHeight - margin.top - margin.bottom;
 
     
     const containerWidth = document.querySelector("#my-chart-container").clientWidth;
@@ -83,6 +83,25 @@ d3.csv("https://raw.githubusercontent.com/sebastian-graeff/pacificdataviz.github
           .attr("fill", "white")
           .selectAll("text");
 
+          svg.append("text")
+          .attr("class", "x-axis-label") // Add a class for styling
+          .attr("x", width / 2 + 100) // Position it in the middle of the chart
+          .attr("y", height + margin.bottom - 50) // Adjust the y position for proper spacing
+          .attr("text-anchor", "middle") // Center-align the text
+          .text("Tons exported") // Replace with your desired label text
+          .attr("fill", "white");
+
+          svg.append("text")
+          .attr("class", "chart-title") // Add a class for styling
+          .attr("x", width / 2) // Position it in the middle of the chart
+          .attr("y", margin.top - 50) // Adjust the y position for proper spacing
+          .attr("text-anchor", "middle") // Center-align the text
+          .style("font-size", "20px") // Adjust font size as needed
+          .style("font-weight", "bold") // Add bold styling if desired
+          .attr("fill", "white")
+          .text("Most popular Pacific destinations for exports from Australia and New Zealand"); // Replace with your desired title text
+      
+
       return ([date, data], transition) => label = label
           .data(data.slice(0, n), d => d.name)
           .join(
@@ -90,7 +109,7 @@ d3.csv("https://raw.githubusercontent.com/sebastian-graeff/pacificdataviz.github
                   .attr("transform", d => `translate(${margin.left - 10},${y(d.rank)})`) // Positioned to the left of the bars
                   .attr("y", y.bandwidth() / 2)
                   .attr("x", 0)
-                  .attr("dy", "-0.25em")
+                  .attr("dy", "0.05em")
                   .text(d => d.name),
               update => update,
               exit => exit.transition(transition).remove()
@@ -212,6 +231,14 @@ d3.csv("https://raw.githubusercontent.com/sebastian-graeff/pacificdataviz.github
     //Initialize the chart with the first frame
     updateChartForFrame(keyframes[0]);
 
+    svg.append("text")
+    .attr("class", "chart-description") // Add a class for styling
+    .attr("x", width / 2 + 100) // Position it in the middle of the chart
+    .attr("y", height + margin.top + 20) // Adjust the y position for proper spacing
+    .attr("text-anchor", "middle") // Center-align the text
+    .style("font-size", "20px") // Adjust font size as needed
+    .attr("fill", "white")
+    .text("Keep scrolling down"); // Replace with your desired text
 
     // Set up the scroll listener
     window.addEventListener("scroll", handleScroll);
